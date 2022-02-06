@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - 8025:8025
+
+  base: &base
+    build: .
+
+  web:
+    << : *base
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/home/server:z
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - mailhog
+
+  test:
+    << : *base
+    command: pytest
