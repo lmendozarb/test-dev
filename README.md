@@ -18,17 +18,21 @@ Actualmente tenemos una aplicación llamada Safari, que se encarga del agendamie
 - docker
 - docker-compose
 
-### Start the project
+### Buils the project
 
-`docker-compose up`
+`make build`
 
 ### Create migrations
 
-`docker-compose run web python manage.py makemigrations`
+`make migrations`
 
 ### Run migrations
 
-`docker-compose run web python manage.py migrate`
+`make migrate`
+
+### Star or Stop the project
+
+`make up-daemon or make stop`
 
 ### Migraciones fallan?
 
